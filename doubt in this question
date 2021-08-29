@@ -1,0 +1,41 @@
+question==>https://leetcode.com/contest/weekly-contest-256/problems/minimum-number-of-work-sessions-to-finish-the-tasks/
+solution which is accepted======
+
+
+// our output should be 2 but according to code it is giving 1 but code is accepted by leetcode how????
+
+class Solution {
+public:
+    int minSessions(vector<int>& tasks, int sessionTime) {
+        if(tasks.size()==1)return 1;
+        vector<int>v(15,0);
+        for(int i=0;i<tasks.size();i++){
+            v[tasks[i]]++;
+        }
+        int ans=0;
+        int i=14;
+        while(i>0){
+            if(v[i]>0){
+                int curr = i;
+                int diff = sessionTime-curr;
+                v[curr]--;
+                while(curr < sessionTime){
+                    if(v[diff]>0){
+                        curr += diff;
+                        v[diff]--;
+                    }
+                    else{
+                        diff--;
+                        if(diff<=0){
+                            break;
+                        }
+                    }
+                }
+                ans++;
+            }
+            if(v[i]==0)i--;
+        }
+        return ans;
+        
+    }
+};
